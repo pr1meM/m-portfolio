@@ -77,8 +77,8 @@ The more common way today is the <strong>dynamic linking</strong>. Instead of co
 <p><strong>PLT</strong> or Procedure Linkage Table acts as a bridge between the program and the GOT.</p>
 <p>The GOT itself is just data, not executable code, so the program cannot directly “call” the GOT. Instead, the binary calls a PLT entry first.</p>
 <p>For every external function there is a PLT entry that looks roughly like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span>puts@PLT:
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">jmp</span> [<span style="color:#66d9ef">puts@GOT</span>]
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">puts@PLT:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#50fa7b">jmp</span> [puts@GOT]
 </span></span></code></pre></div><p>The PLT entry simply jumps to the address stored inside the GOT entry for <code>puts</code></p>
 <p>So the flow looks like this:
 <code>program -&gt; PLT -&gt; GOT -&gt; libc function</code></p>
@@ -93,7 +93,7 @@ The more common way today is the <strong>dynamic linking</strong>. Instead of co
 <p>As mentioned earlier, libc contains many useful functions. Two very interesting ones for exploit development are <code>system()</code> and <code>execve()</code>.</p>
 <p>When exploit developers gain control over the stack, they often try to spawn a shell. If they can leak a libc address, they can calculate the base address of libc and therefore the location of functions like <code>system()</code>.</p>
 <p>A very common technique is calling:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#a6e22e">system</span>(<span style="color:#e6db74">&#34;/bin/sh&#34;</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#50fa7b">system</span>(<span style="color:#f1fa8c">&#34;/bin/sh&#34;</span>)
 </span></span></code></pre></div><p>This works because the string <code>&quot;/bin/sh</code> also exists inside libs. By controlling the instruction pointer and setting up the correct arguments, attackers can redirect execution into libc and spawn a shell.</p>
 <hr>
 <p>Author: ml0w6c65766c</p>

@@ -7,7 +7,7 @@ theme = 'mlowlevl'
   [markup.goldmark.renderer]
     unsafe = true
   [markup.highlight]
-    style = 'monokai'
+    style = 'dracula'
     noClasses = true
 
 disableKinds = ["taxonomy", "term"]

