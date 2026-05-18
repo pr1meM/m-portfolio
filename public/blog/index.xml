@@ -22,12 +22,5 @@
       <guid>https://mlowlevl.xyz/blog/what-is-plt-libc-got-blog-post/</guid>
       <description>PLT, GOT and libc are three common concepts every C/C++ programmer works with, but not every programmer is familiar with it so I thought I’d do a small post explaining it. I also will give a simple example how Hackers use libc or the GOT to exploit programs with bad security.&#xA;libc is the standard c library used by almost every C/C++ program on Linux. Its a collection of predefined functions such as printf ,puts ,mallocor fgets.</description>
     </item>
-    <item>
-      <title>hello world</title>
-      <link>https://mlowlevl.xyz/blog/hello-world/</link>
-      <pubDate>Thu, 01 Jan 2026 00:00:00 +0000</pubDate>
-      <guid>https://mlowlevl.xyz/blog/hello-world/</guid>
-      <description>erster post auf dem neuen setup. migrated von github api zu hugo.</description>
-    </item>
   </channel>
 </rss>

