@@ -1,0 +1,9 @@
+{{ define "main" }}
+<h2 class="section-title">links</h2>
+{{ range site.Data.links }}
+<div class="item">
+  <a href="{{ .url }}" target="_blank" rel="noopener">{{ .name }}</a>
+  {{ with .desc }}<span class="meta">{{ . }}</span>{{ end }}
+</div>
+{{ end }}
+{{ end }}

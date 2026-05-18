@@ -1,0 +1,20 @@
+{{ define "main" }}
+<h2 class="section-title">blog</h2>
+<div class="card-grid">
+  {{ range .Pages }}
+    {{- $thumb := .Resources.GetMatch "thumbnail*" -}}
+    <a class="card" href="{{ .RelPermalink }}">
+      {{ if $thumb }}
+      <img class="card-thumb" src="{{ $thumb.RelPermalink }}" alt="{{ .Title }}" loading="lazy">
+      {{ end }}
+      <div class="card-body">
+        <div class="card-eyebrow">blog{{ if .Date }} · {{ .Date.Format "2006-01-02" }}{{ end }}</div>
+        <div class="card-title">{{ .Title }}</div>
+        {{ with .Description }}<div class="card-excerpt">{{ . }}</div>{{ end }}
+      </div>
+    </a>
+  {{ else }}
+  <p style="color:var(--muted);font-size:13px;">no posts yet.</p>
+  {{ end }}
+</div>
+{{ end }}

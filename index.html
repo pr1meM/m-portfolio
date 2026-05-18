@@ -1,0 +1,1027 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mlowlevl</title>
+<meta name="description" content="Security research, CTF writeups and blog posts on pwn, malware analysis and osint.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mlowlevl.xyz">
+<meta property="og:title" content="mlowlevl">
+<meta property="og:description" content="Security research, CTF writeups and blog posts on pwn, malware analysis and osint.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mlowlevl">
+<meta name="twitter:description" content="Security research, CTF writeups and blog posts on pwn, malware analysis and osint.">
+<link rel="canonical" href="https://mlowlevl.xyz">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23202024'/><text x='16' y='22' text-anchor='middle' font-family='Inter,sans-serif' font-size='18' font-weight='600' fill='%23c6c6c6'>m</text></svg>">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#202024;--paper:#272a2d;--text:#c6c6c6;--muted:#9a9a9a;--border:#2a2a2a;--link:#f1f1f1;--link-hover:#6683ae;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.65;}
+.nav{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:16px 24px;border-bottom:1px solid var(--border);background:var(--bg);flex-wrap:wrap;gap:10px;}
+.logo-wrap{display:flex;flex-direction:column;gap:3px;}
+.logo{font-family:'Inter',sans-serif;font-size:20px;letter-spacing:0.01em;color:var(--text);font-weight:600;cursor:pointer;}
+.logo-row{display:flex;align-items:center;gap:12px;}
+.socials{display:flex;align-items:center;gap:10px;}
+.socials a{color:#bdbdbd;font-size:20px;transition:color .15s;text-decoration:none;}
+.socials a:hover{color:#fff;}
+.tagline{font-size:11px;color:var(--muted);letter-spacing:0.01em;}
+.nav-buttons{display:flex;gap:0;align-items:center;flex-wrap:wrap;}
+.nav-btn{font-family:'Inter',sans-serif;font-size:13px;font-weight:400;background:transparent;border:none;color:var(--link);padding:6px 10px;cursor:pointer;transition:color .15s;display:flex;align-items:center;gap:6px;}
+.nav-btn:hover,.nav-btn.active-tab{color:var(--link-hover);}
+.sep{color:var(--border);user-select:none;font-size:13px;}
+.chevron{width:10px;height:10px;display:inline-block;position:relative;transition:transform .2s;}
+.chevron::before,.chevron::after{content:'';position:absolute;background:currentColor;border-radius:1px;}
+.chevron::before{width:6px;height:1.5px;top:4px;left:0;transform:rotate(35deg);}
+.chevron::after{width:6px;height:1.5px;top:4px;left:4px;transform:rotate(-35deg);}
+.dropdown.open .chevron{transform:rotate(180deg);}
+.dropdown{position:relative;}
+.dropdown-panel{opacity:0;pointer-events:none;transform:translateY(-4px);transition:opacity .15s,transform .15s;position:absolute;top:calc(100% + 8px);left:0;background:#272a2d;border:1px solid var(--border);border-radius:5px;overflow:hidden;min-width:160px;z-index:20;box-shadow:0 12px 30px rgba(0,0,0,.5);}
+.dropdown.open .dropdown-panel{opacity:1;pointer-events:all;transform:translateY(0);}
+.dropdown-item{padding:10px 16px;font-family:'Inter',sans-serif;font-size:13px;color:var(--muted);cursor:pointer;border-left:2px solid transparent;transition:color .12s,background .12s,border-color .12s;}
+.dropdown-item:hover{color:var(--link-hover);background:#525252;border-left-color:var(--link);}
+.page-layout{position:relative;max-width:960px;margin:0 auto;}
+.paper{min-height:100vh;background:var(--paper);border-left:1px solid var(--border);border-right:1px solid var(--border);}
+.extra-paper{position:absolute;left:calc(100% + 20px);top:0;width:320px;background:var(--paper);border:1px solid var(--border);padding:32px 24px;display:none;}
+@media(max-width:1340px){.extra-paper{display:none !important;}}
+.content{padding:28px 16px 80px;}
+@media(min-width:600px){.content{padding:36px 40px 80px;}}
+.page{display:none;}
+.page.active{display:block;}
+h2.section-title{font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:#e0e0e0;letter-spacing:0.14em;text-transform:uppercase;border-bottom:1px solid var(--border);padding-bottom:8px;margin-bottom:26px;}
+
+/* HOME */
+.home-section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.home-section-header h2.section-title{margin-bottom:0;border-bottom:none;padding-bottom:0;}
+.view-all{font-size:12px;color:#555;cursor:pointer;transition:color .15s;font-family:'Inter',sans-serif;letter-spacing:0;}
+.view-all:hover{color:var(--link-hover);}
+.home-block{margin-bottom:36px;}
+.pager{display:flex;justify-content:space-between;align-items:center;margin-top:24px;padding-top:16px;border-top:1px solid var(--border);}
+.pager-btn{font-size:13px;color:var(--muted);cursor:pointer;transition:color .15s;font-family:'Inter',sans-serif;user-select:none;}
+.pager-btn:hover{color:var(--link-hover);}
+.pager-info{font-size:12px;color:#444;}
+
+/* CARDS */
+.card-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;}
+@media(max-width:480px){.card-grid{grid-template-columns:1fr;}}
+.card{cursor:pointer;}
+.card-thumb{width:100%;height:185px;object-fit:cover;display:block;border:1px solid var(--border);}
+.card-body{padding:11px 0 18px;}
+.card-eyebrow{font-size:11px;color:#666;letter-spacing:0.05em;text-transform:uppercase;font-weight:500;margin-bottom:7px;}
+.card-title{font-size:17px;color:var(--text);line-height:1.4;word-break:break-word;transition:color .15s;}
+.card:hover .card-title{color:var(--link-hover);}
+.card-excerpt{font-size:12px;color:#7a7a7a;margin-top:5px;line-height:1.5;}
+
+/* WRITEUPS GRID */
+.writeup-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;}
+@media(max-width:540px){.writeup-grid{grid-template-columns:1fr;}}
+.writeup-card{cursor:pointer;}
+.writeup-thumb{width:100%;height:195px;object-fit:cover;display:block;border:1px solid var(--border);}
+.writeup-body{padding:11px 0 18px;}
+.writeup-eyebrow{font-size:11px;color:#666;letter-spacing:0.05em;text-transform:uppercase;font-weight:500;margin-bottom:7px;}
+.writeup-title{font-size:17px;color:var(--text);word-break:break-word;line-height:1.4;transition:color .15s;}
+.writeup-card:hover .writeup-title{color:var(--link-hover);}
+
+/* BLOG */
+.blog-item{border-bottom:1px solid var(--border);padding:22px 0;}
+.blog-item:last-child{border-bottom:none;}
+.blog-item-title{font-size:17px;color:var(--link);cursor:pointer;transition:color .15s;font-weight:400;line-height:1.35;}
+.blog-item-title:hover{color:var(--link-hover);}
+.blog-item-meta{font-size:13px;color:#555;margin-top:5px;}
+.blog-item-excerpt{font-size:14px;color:#777;margin-top:8px;line-height:1.65;}
+
+/* ITEMS */
+.item{margin:0 0 20px;display:flex;flex-direction:column;gap:5px;}
+.item a{color:var(--link);text-decoration:none;font-size:16px;font-weight:400;cursor:pointer;transition:color .15s;}
+.item a:hover{color:var(--link-hover);}
+.meta{font-size:14px;color:var(--muted);}
+
+/* BACK */
+.back{font-size:14px;color:#666;cursor:pointer;display:inline-flex;align-items:center;gap:6px;margin-bottom:28px;transition:color .15s;font-family:'Inter',sans-serif;}
+.back:hover{color:var(--link-hover);}
+
+/* ── WRITEUP READER ── */
+.md-reader{max-width:680px;margin:0 auto;}
+.md-reader-header{margin-bottom:36px;padding-bottom:24px;border-bottom:1px solid var(--border);}
+.md-reader-title{font-family:'Inter',sans-serif;font-size:24px;font-weight:600;color:#e8e8e8;line-height:1.3;margin-bottom:10px;letter-spacing:-0.01em;}
+.md-reader-meta{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+.md-reader-cat{font-size:11px;font-family:'Inter',sans-serif;letter-spacing:0.08em;text-transform:uppercase;font-weight:600;color:#666;}
+.md-reader-cat.pwn-lbl,.md-reader-cat.malware-lbl,.md-reader-cat.osint-lbl{color:#666;}
+
+/* Markdown body */
+.md{font-size:15.5px;line-height:1.9;color:#b8b8b8;font-family:'Inter',system-ui,sans-serif;}
+.md p{margin:0 0 1.1em;}
+.md a{color:#6683ae;text-decoration:none;border-bottom:1px solid #2a3a4a;}
+.md a:hover{color:#88a0c8;border-bottom-color:#88a0c8;}
+.md strong{color:#d8d8d8;font-weight:500;}
+.md em{color:#aaa;font-style:italic;}
+
+/* Headings */
+.md h1{font-size:21px;font-weight:600;color:#e0e0e0;margin:2.2em 0 0.6em;letter-spacing:-0.01em;line-height:1.3;}
+.md h2{font-size:17px;font-weight:500;color:#d0d0d0;margin:2em 0 0.6em;padding-bottom:6px;border-bottom:1px solid var(--border);}
+.md h3{font-size:15px;font-weight:500;color:#c0c0c0;margin:1.6em 0 0.5em;}
+.md h4{font-size:14px;font-weight:500;color:#aaa;margin:1.4em 0 0.4em;}
+
+/* Code */
+.md code{background:#181818;color:#c8b99a;padding:2px 6px;font-family:'Inter',sans-serif;font-size:13px;border-radius:3px;border:1px solid #2a2a2a;}
+.md pre{background:#181818;border:1px solid #2a2a2a;border-radius:5px;padding:18px 20px;overflow-x:auto;margin:1.4em 0;line-height:1.65;}
+.md pre code{background:none;border:none;padding:0;color:#c8c8c0;font-size:13px;}
+
+/* Blockquote */
+.md blockquote{border-left:3px solid #3a3a3a;margin:1.4em 0;padding:10px 18px;background:#1e1e22;border-radius:0 3px 3px 0;}
+.md blockquote p{color:#888;margin:0;font-style:italic;}
+
+/* Lists */
+.md ul,.md ol{margin:0.6em 0 1em 1.4em;padding:0;}
+.md li{margin-bottom:0.35em;line-height:1.75;}
+.md ul li{list-style:disc;}
+
+/* Images */
+.md img{max-width:100%;display:block;margin:1.6em auto;border:1px solid var(--border);border-radius:3px;}
+
+/* Tables */
+.md table{width:100%;border-collapse:collapse;font-size:14px;margin:1.4em 0;}
+.md th{text-align:left;padding:8px 12px;font-size:11px;font-family:'Inter',sans-serif;letter-spacing:0.06em;text-transform:uppercase;color:#666;border-bottom:1px solid var(--border);font-weight:600;}
+.md td{padding:9px 12px;border-bottom:1px solid #222;color:#b0b0b0;}
+.md tr:last-child td{border-bottom:none;}
+
+/* HR */
+.md hr{border:none;border-top:1px solid var(--border);margin:2em 0;}
+
+/* READER */
+.md-reader-byline{font-size:13px;color:var(--muted);}
+
+/* TOOLS / PROJECTS */
+.tool-list{border-top:1px solid var(--border);margin-top:4px;}
+.tool-entry{display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--border);text-decoration:none;color:inherit;}
+.tool-entry:hover .tool-entry-name{color:var(--link-hover);}
+.tool-entry-name{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--link);word-break:break-all;}
+.tool-entry-desc{font-size:14px;color:#666;line-height:1.5;}
+@media(max-width:520px){.tool-entry{grid-template-columns:1fr;gap:3px;}.tool-entry-desc{font-size:13px;}}
+
+/* EXTRA PAPER CONTENT */
+.sidebar-block{margin-bottom:24px;}
+.sidebar-block:last-child{margin-bottom:0;}
+.sidebar-heading{font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#555;margin-bottom:12px;}
+.sidebar-tags{display:flex;flex-direction:column;}
+.sidebar-tag{font-size:13px;color:var(--muted);cursor:pointer;padding:8px 0;border-bottom:1px solid var(--border);transition:color .15s;}
+.sidebar-tag:first-child{border-top:1px solid var(--border);}
+.sidebar-tag:hover{color:var(--link);}
+.sidebar-post{display:flex;gap:12px;align-items:flex-start;padding:13px 0;border-bottom:1px solid var(--border);cursor:pointer;}
+.sidebar-post:last-child{border-bottom:none;padding-bottom:0;}
+.sidebar-post:first-child{padding-top:0;}
+.sidebar-post-thumb{width:72px;height:52px;object-fit:cover;flex-shrink:0;border:1px solid var(--border);display:block;background:#1a1a1e;}
+.sidebar-post-info{flex:1;min-width:0;}
+.sidebar-post-label{font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#555;margin-bottom:4px;}
+.sidebar-post-title{font-size:13px;color:#b0b0b0;line-height:1.35;transition:color .15s;}
+.sidebar-post:hover .sidebar-post-title{color:var(--link);}
+.sidebar-post-date{font-size:11px;color:#555;margin-top:3px;}
+
+/* HAMBURGER */
+.hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;background:transparent;border:none;cursor:pointer;padding:4px;margin-left:auto;}
+.hamburger span{display:block;width:22px;height:1.5px;background:var(--text);border-radius:1px;transition:transform .2s,opacity .2s;}
+.nav.mobile-open .hamburger span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+.nav.mobile-open .hamburger span:nth-child(2){opacity:0;}
+.nav.mobile-open .hamburger span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+
+/* MOBILE */
+@media(max-width:599px){
+  body{font-size:16px;}
+  .nav{padding:14px 16px;gap:0;flex-wrap:wrap;align-items:center;}
+  .logo-wrap{flex:1;}
+  .logo{font-size:19px;}
+  .tagline{font-size:12px;}
+  .socials a{font-size:22px;}
+  .hamburger{display:flex;}
+  .nav-buttons{display:none;width:100%;flex-direction:column;border-top:1px solid var(--border);margin-top:12px;padding-top:4px;}
+  .nav.mobile-open .nav-buttons{display:flex;}
+  .sep{display:none;}
+  .nav-btn{font-size:15px;padding:13px 2px;width:100%;justify-content:flex-start;border-bottom:1px solid var(--border);border-radius:0;}
+  .nav-btn:last-child{border-bottom:none;}
+  .dropdown{width:100%;}
+  .dropdown-panel{position:static;opacity:1;pointer-events:none;transform:none;box-shadow:none;border:none;border-radius:0;background:transparent;min-width:0;max-height:0;overflow:hidden;transition:max-height .2s ease;}
+  .dropdown.open .dropdown-panel{pointer-events:all;max-height:300px;}
+  .dropdown-item{padding:11px 20px;font-size:14px;border-left:none;border-bottom:1px solid var(--border);}
+  .dropdown-item:last-child{border-bottom:none;}
+  .content{padding:24px 16px 60px;}
+  h2.section-title{font-size:13px;margin-bottom:22px;letter-spacing:0.1em;}
+  .home-block{margin-bottom:32px;}
+  .card-thumb{height:170px;}
+  .card-body{padding:10px 0 0;}
+  .card-title{font-size:15px;line-height:1.4;}
+  .writeup-grid{gap:14px;}
+  .writeup-thumb{height:175px;}
+  .writeup-title{font-size:15px;line-height:1.4;}
+  .blog-item{padding:20px 0;}
+  .blog-item-title{font-size:17px;}
+  .blog-item-meta{font-size:13px;margin-top:5px;}
+  .blog-item-excerpt{font-size:14px;margin-top:8px;line-height:1.65;}
+  .item{margin-bottom:20px;gap:5px;}
+  .item a{font-size:17px;}
+  .meta{font-size:14px;}
+  .back{font-size:15px;margin-bottom:24px;}
+  .view-all{font-size:13px;}
+  .md-reader-title{font-size:21px;line-height:1.3;}
+  .md-reader{padding:0;}
+  .md-reader-header{margin-bottom:28px;padding-bottom:20px;}
+  .sidebar-block{margin-bottom:20px;}
+  .md{font-size:16px;line-height:1.85;}
+  .md p{margin-bottom:1.2em;}
+  .md h1{font-size:21px;margin:2em 0 0.6em;}
+  .md h2{font-size:18px;}
+  .md h3{font-size:16px;}
+  .md code{font-size:14px;}
+  .md pre{padding:14px 16px;font-size:13px;}
+  .md pre code{font-size:13px;}
+  .md td{padding:9px 10px;font-size:14px;}
+  .md th{padding:8px 10px;}
+  .footer-inner{padding:24px 16px;}
+  .footer-name{font-size:14px;}
+  .footer-copy{font-size:12px;}
+}
+/* GISCUS */
+.giscus-wrap{margin-top:60px;padding-top:28px;border-top:1px solid var(--border);}
+.giscus-label{font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#555;margin-bottom:20px;}
+/* FOOTER */
+.footer{width:100%;background:var(--bg);border-top:1px solid var(--border);}
+.footer-inner{max-width:960px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-end;padding:32px 24px;flex-wrap:wrap;gap:16px;}
+.footer-brand{}
+.footer-name{font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px;}
+.footer-copy{font-size:12px;color:var(--muted);}
+.footer-links{display:flex;gap:14px;align-items:center;}
+.footer-links a{color:#666;display:flex;align-items:center;transition:color .15s;}
+.footer-links a:hover{color:#aaa;}
+</style>
+
+<div class="nav">
+  <div class="logo-wrap">
+    <div class="logo-row">
+      <div class="logo" onclick="show('home')">mlowlevl</div>
+      <div class="socials">
+        <a href="https://github.com/ml0w6c65766c" target="_blank">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+        </a>
+        <a href="https://www.threads.net/@mlowlevl" target="_blank">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="tagline">ctf / pwn / malware-analysis</div>
+  </div>
+  <button class="hamburger" onclick="toggleMobileMenu()" aria-label="menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-buttons">
+    <button class="nav-btn active-tab" id="btn-home" onclick="show('home')">home</button>
+    <span class="sep">|</span>
+    <div class="dropdown" id="wr-dropdown">
+      <button class="nav-btn" id="btn-writeups" onclick="toggleDropdown(event)">
+        writeups <span class="chevron"></span>
+      </button>
+      <div class="dropdown-panel" id="wr-panel">
+        <div class="dropdown-item" data-filter="all">all</div>
+        <div class="dropdown-item" data-filter="pwn">pwn</div>
+        <div class="dropdown-item" data-filter="osint">osint</div>
+        <div class="dropdown-item" data-filter="malware-analysis">malware-analysis</div>
+      </div>
+    </div>
+    <span class="sep">|</span>
+    <button class="nav-btn" id="btn-blog" onclick="show('blog')">blog</button>
+    <span class="sep">|</span>
+    <button class="nav-btn" id="btn-tools" onclick="show('tools')">tools</button>
+    <span class="sep">|</span>
+    <button class="nav-btn" id="btn-links" onclick="show('links')">links</button>
+  </div>
+</div>
+
+<div class="page-layout">
+<div class="paper">
+  <div class="content">
+
+    <!-- HOME -->
+    <div id="home" class="page active">
+      <div class="home-block" style="margin-top:4px;">
+        <h2 class="section-title">latest</h2>
+        <div id="home-latest-grid" class="card-grid">
+          <div style="color:#444;font-size:12px;">loading...</div>
+        </div>
+        <div id="home-pager" class="pager" style="display:none;"></div>
+      </div>
+    </div>
+
+    <!-- WRITEUPS -->
+    <div id="writeups" class="page">
+      <h2 class="section-title">writeups</h2>
+      <div id="list-view">
+        <div id="writeup-list" style="color:var(--muted);font-size:13px;">loading...</div>
+      </div>
+      <div id="detail-view" style="display:none;">
+        <span class="back" onclick="back()">&#x27F5; back</span>
+        <div class="md-reader">
+          <div class="md-reader-header">
+            <div class="md-reader-title" id="wr-title"></div>
+            <div class="md-reader-meta">
+              <span class="md-reader-cat" id="wr-cat"></span>
+              <span class="md-reader-byline">mlowlevl<span id="wr-date"></span></span>
+            </div>
+          </div>
+          <div id="wr-content" class="md"></div>
+          <div class="giscus-wrap" id="giscus-writeup"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOG -->
+    <div id="blog" class="page">
+      <h2 class="section-title">blog</h2>
+      <div id="blog-list">
+        <div style="color:var(--muted);font-size:13px;">loading...</div>
+      </div>
+      <div id="blog-detail-view" style="display:none;">
+        <span class="back" onclick="closeBlogDetail()">&#x2190; back</span>
+        <div class="md-reader">
+          <div class="md-reader-header">
+            <div class="md-reader-title" id="blog-title"></div>
+            <div class="md-reader-meta" id="blog-meta"></div>
+          </div>
+          <div id="blog-content" class="md"></div>
+          <div class="giscus-wrap" id="giscus-blog"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOOLS -->
+    <div id="tools" class="page">
+      <h2 class="section-title">tools & projects</h2>
+      <div class="tool-list">
+        <a class="tool-entry" href="https://github.com/ml0w6c65766c/seeker" target="_blank">
+          <span class="tool-entry-name">seekerr</span>
+          <span class="tool-entry-desc">cybersecurity news aggregator</span>
+        </a>
+        <a class="tool-entry" href="https://github.com/ml0w6c65766c/tio" target="_blank">
+          <span class="tool-entry-name">tio</span>
+          <span class="tool-entry-desc">three-in-one pwn setup tool for binary exploitation CTFs</span>
+        </a>
+        <a class="tool-entry" href="https://github.com/ml0w6c65766c/m_port_scanner" target="_blank">
+          <span class="tool-entry-name">m_port_scanner</span>
+          <span class="tool-entry-desc">tcp port scanner</span>
+        </a>
+        <a class="tool-entry" href="https://github.com/ml0w6c65766c/m_simple_keylogger_in_c" target="_blank">
+          <span class="tool-entry-name">m_keylogger</span>
+          <span class="tool-entry-desc">keylogger written in C for Linux</span>
+        </a>
+        <a class="tool-entry" href="https://github.com/ml0w6c65766c/pwntools_buffer_overflow_script" target="_blank">
+          <span class="tool-entry-name">pwntools_buffer_overflow_script</span>
+          <span class="tool-entry-desc">pwntools script for simple buffer overflows</span>
+        </a>
+        <a class="tool-entry" href="https://github.com/ml0w6c65766c/m_converter" target="_blank">
+          <span class="tool-entry-name">m_converter</span>
+          <span class="tool-entry-desc">base converter</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- LINKS -->
+    <div id="links" class="page">
+      <h2 class="section-title">links</h2>
+      <div class="item"><a href="https://github.com/ml0w6c65766c">github</a></div>
+      <div class="item"><a href="https://pwn.college/hacker/163072">pwn.college</a></div>
+      <div class="item"><a href="https://play.picoctf.org/users/ml0w6c65766c">picoctf</a></div>
+      <div class="item"><a href="https://profile.hackthebox.com/">hackthebox</a></div>
+      <div class="item"><a href="https://threads.net/@mlowlevl">threads</a></div>
+    </div>
+
+  </div>
+</div>
+<aside class="extra-paper" id="global-sidebar"></aside>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-name">mlowlevl</div>
+      <div class="footer-copy">© 2026 · ctf / pwn / malware-analysis</div>
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com/ml0w6c65766c" target="_blank" title="GitHub">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+      </a>
+      <a href="https://www.threads.net/@ml0w6c65766c" target="_blank" title="Threads">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+// ── Giscus config — fill in after setup on giscus.app ──
+const GISCUS_REPO       = 'ml0w6c65766c/blog_comments';
+const GISCUS_REPO_ID    = 'R_kgDOSfPezw';
+const GISCUS_CATEGORY   = 'General';
+const GISCUS_CATEGORY_ID= 'DIC_kwDOSfPez84C9L2H';
+// ────────────────────────────────────────────────────────
+
+const USER="ml0w6c65766c";
+const REPO="writeups";
+const BLOG_USER="ml0w6c65766c";
+const BLOG_REPO="blog_posts";
+const CACHE_TTL=3600000;
+function cacheGet(key){try{const e=JSON.parse(localStorage.getItem(key));if(e&&Date.now()-e.ts<CACHE_TTL)return e.data;}catch(_){}return null;}
+function cacheSet(key,data){try{localStorage.setItem(key,JSON.stringify({ts:Date.now(),data}));}catch(_){}}
+let files=[];
+let blogPosts=[];
+let currentFilter="all";
+let blogDetailOpen=false;
+let filesLoaded=false;
+let blogLoaded=false;
+let _fromPopstate=false;
+const writeupDates={};
+const writeupExcerpts={};
+
+function short(text,max=88){
+  if(!text) return '';
+  text=text.trim();
+  return text.length>max ? text.slice(0,max-1).trimEnd()+'…' : text;
+}
+
+function parseWriteupExcerpt(md){
+  const lines=md.split(/\r?\n/);
+  let idx=0;
+  if(lines[0]==='---'){
+    idx=1;
+    while(idx<lines.length){ if(lines[idx].trim()==='---'){idx++;break;} idx++; }
+  }
+  for(let i=idx;i<lines.length;i++){
+    const line=lines[i].trim();
+    if(!line||line.startsWith('#')||line.startsWith('```')||line.startsWith('>')||line.startsWith('!')||line.startsWith('|')) continue;
+    const text=line.replace(/!\[[^\]]*\]\([^)]+\)/g,'').replace(/\[([^\]]+)\]\([^)]+\)/g,'$1').replace(/[*_`#]/g,'').trim();
+    if(text.length>25) return text;
+  }
+  return '';
+}
+
+async function getWriteupExcerpt(path){
+  const key=`wexc_${path}`;
+  const cached=cacheGet(key);
+  if(cached!==null){writeupExcerpts[path]=cached;return cached;}
+  try{
+    const res=await fetch(`https://raw.githubusercontent.com/${USER}/${REPO}/main/${path}`);
+    const md=await res.text();
+    const exc=parseWriteupExcerpt(md);
+    cacheSet(key,exc);
+    writeupExcerpts[path]=exc;
+    return exc;
+  }catch(_){return '';}
+}
+
+const PAGE_PATHS={home:'/',writeups:'/writeups',blog:'/blog',tools:'/tools',links:'/links'};
+const BASE_TITLE='mlowlevl';
+function setPath(path){
+  if(_fromPopstate||location.pathname===path) return;
+  history.pushState(null,'',path);
+}
+function handlePath(){
+  const path=location.pathname;
+  if(!path||path==='/'||path==='/home'){return;}
+  if(path==='/blog'){show('blog',false);return;}
+  if(path==='/writeups'){show('writeups',false);return;}
+  if(path==='/tools'){show('tools',false);return;}
+  if(path==='/links'){show('links',false);return;}
+  const bm=path.match(/^\/b\/(.+)$/);
+  if(bm){
+    const p=decodeURIComponent(bm[1]);
+    const idx=blogPosts.findIndex(post=>post.path===p);
+    if(idx>=0) openBlogPost(idx);
+    return;
+  }
+  const wm=path.match(/^\/w\/(.+)$/);
+  if(wm){
+    const folder=decodeURIComponent(wm[1]);
+    const idx=files.findIndex(f=>getFolderName(f.path)===folder);
+    if(idx>=0) openFile(idx);
+    return;
+  }
+}
+window.addEventListener('popstate',()=>{_fromPopstate=true;handlePath();_fromPopstate=false;});
+
+function loadGiscus(containerId, term){
+  const container=document.getElementById(containerId);
+  if(!container) return;
+  container.innerHTML='<div class="giscus-label">comments</div>';
+  const s=document.createElement('script');
+  s.src='https://giscus.app/client.js';
+  s.setAttribute('data-repo', GISCUS_REPO);
+  s.setAttribute('data-repo-id', GISCUS_REPO_ID);
+  s.setAttribute('data-category', GISCUS_CATEGORY);
+  s.setAttribute('data-category-id', GISCUS_CATEGORY_ID);
+  s.setAttribute('data-mapping', 'specific');
+  s.setAttribute('data-term', term);
+  s.setAttribute('data-strict', '0');
+  s.setAttribute('data-reactions-enabled', '1');
+  s.setAttribute('data-emit-metadata', '0');
+  s.setAttribute('data-input-position', 'top');
+  s.setAttribute('data-theme', 'transparent_dark');
+  s.setAttribute('data-lang', 'en');
+  s.setAttribute('crossorigin', 'anonymous');
+  s.async=true;
+  container.appendChild(s);
+}
+
+// new structure: writeups/pwn/folder/writeup.md  or  writeups/malware-analysis/folder/*.md
+// thumbnails: writeups/images/<foldername>.png
+// blog thumbnails: same folder as the blog .md file, named like <postname>.png
+
+function show(id,updateUrl=true){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active-tab'));
+  const btn=document.getElementById('btn-'+id);
+  if(btn) btn.classList.add('active-tab');
+  closeDropdown();
+  closeMobileMenu();
+  if(updateUrl&&!_fromPopstate){
+    const p=PAGE_PATHS[id];
+    if(p&&location.pathname!==p) history.pushState(null,'',p);
+    document.title=BASE_TITLE;
+  }
+  if(id==='writeups'){
+    document.getElementById('list-view').style.display='block';
+    document.getElementById('detail-view').style.display='none';
+    document.getElementById('global-sidebar').style.display='none';
+  }
+  if(id==='blog'){
+    if(!blogDetailOpen){
+      document.getElementById('blog-list').style.display='block';
+      document.getElementById('blog-detail-view').style.display='none';
+      document.getElementById('global-sidebar').style.display='none';
+    }
+  }
+  if(id!=='writeups'&&id!=='blog'){
+    document.getElementById('global-sidebar').style.display='none';
+  }
+}
+
+function toggleDropdown(e){
+  e.stopPropagation();
+  document.getElementById('wr-dropdown').classList.toggle('open');
+}
+function closeDropdown(){
+  document.getElementById('wr-dropdown').classList.remove('open');
+}
+function toggleMobileMenu(){
+  document.querySelector('.nav').classList.toggle('mobile-open');
+  closeDropdown();
+}
+function closeMobileMenu(){
+  document.querySelector('.nav').classList.remove('mobile-open');
+}
+document.addEventListener('click',e=>{
+  closeDropdown();
+  if(!e.target.closest('.nav')) closeMobileMenu();
+});
+
+document.querySelectorAll('.dropdown-item').forEach(item=>{
+  item.addEventListener('click', e=>{
+    e.stopPropagation();
+    setFilter(item.dataset.filter);
+  });
+});
+
+function setFilter(e,f){
+  if(typeof e==='string'){
+    f=e;
+    e=null;
+  }
+  if(e && e.stopPropagation) e.stopPropagation();
+  currentFilter=f;
+  render();
+  show('writeups');
+  closeDropdown();
+}
+
+function getPathCategory(path){
+  const parts = path.toLowerCase().split('/').filter(Boolean);
+  return parts[0] || '';
+}
+
+function getCategory(path){
+  const category = getPathCategory(path);
+  if(category==='pwn') return {cls:'pwn-lbl',text:'pwn'};
+  if(category==='malware-analysis') return {cls:'malware-lbl',text:'malware-analysis'};
+  if(category==='osint') return {cls:'osint-lbl',text:'osint'};
+  return {cls:'',text:'ctf'};
+}
+
+// folder name = the directory name one level above the .md file
+function getFolderName(path){
+  const parts=path.split('/');
+  // e.g. writeups/pwn/challenge_name/writeup.md → parts[2]
+  if(parts.length>=3) return parts[parts.length-2];
+  return parts[parts.length-1].replace('.md','');
+}
+
+function getThumbUrl(path){
+  const mdName = path.split('/').pop().replace('.md', '.png');
+
+  return `https://raw.githubusercontent.com/${USER}/${REPO}/main/images/${mdName}`;
+}
+
+function getBlogThumbUrl(path){
+  return `https://raw.githubusercontent.com/${BLOG_USER}/${BLOG_REPO}/main/${path.replace(/\.md$/, '.png')}`;
+}
+
+async function load(){
+  try{
+    let tree=cacheGet('writeup_tree');
+    if(!tree){
+      const res=await fetch(`https://api.github.com/repos/${USER}/${REPO}/git/trees/main?recursive=1`);
+      const data=await res.json();
+      tree=(data.tree||[]).filter(f=>f.path.endsWith('.md')&&!f.path.startsWith('images/'));
+      cacheSet('writeup_tree',tree);
+    }
+    files=tree;
+    render();
+    loadBlog();
+    await Promise.all([
+      ...files.map(f=>getWriteupCommitDate(f.path).then(d=>{ if(d) writeupDates[f.path]=d; })),
+      ...files.map(f=>getWriteupExcerpt(f.path))
+    ]);
+    render();
+    filesLoaded=true;
+    maybeRenderLatest();
+  }catch(e){
+    document.getElementById('writeup-list').textContent='could not load.';
+    document.getElementById('home-latest-grid').innerHTML='<div style="color:#444;font-size:12px;">could not load.</div>';
+  }
+}
+
+let latestPage=0;
+let latestAll=[];
+
+function buildLatestAll(){
+  const all=[];
+  blogPosts.forEach((post,i)=>{
+    all.push({thumb:getBlogThumbUrl(post.path),label:'blog',title:post.title,meta:post.date,excerpt:post.excerpt||'',onclick:`openBlogPost(${i})`});
+  });
+  files.forEach((f,i)=>{
+    const lbl=getCategory(f.path);
+    all.push({thumb:getThumbUrl(f.path),label:lbl.text,title:getFolderName(f.path).replace(/_/g,' '),meta:writeupDates[f.path]||'',excerpt:writeupExcerpts[f.path]||'',onclick:`openFile(${i})`});
+  });
+  all.sort((a,b)=>{
+    if(a.meta&&b.meta) return b.meta.localeCompare(a.meta);
+    if(a.meta) return -1;
+    if(b.meta) return 1;
+    return 0;
+  });
+  return all;
+}
+
+function renderLatest(){
+  latestAll=buildLatestAll();
+  renderLatestPage();
+}
+
+function renderLatestPage(){
+  const grid=document.getElementById('home-latest-grid');
+  const pager=document.getElementById('home-pager');
+  const per=6;
+  const total=latestAll.length;
+  const start=latestPage*per;
+  const items=latestAll.slice(start,start+per);
+  if(!items.length){
+    grid.innerHTML='<div style="color:#444;font-size:12px;">nothing here yet.</div>';
+    pager.style.display='none';
+    return;
+  }
+  grid.innerHTML=items.map(item=>`<div class="card" onclick="${item.onclick}">
+    <img class="card-thumb" src="${item.thumb}" onerror="this.style.display='none';">
+    <div class="card-body">
+      <div class="card-eyebrow">${item.label}${item.meta?' · '+item.meta:''}</div>
+      <div class="card-title">${item.title}</div>
+      ${item.excerpt?`<div class="card-excerpt">${short(item.excerpt)}</div>`:''}
+    </div>
+  </div>`).join('');
+  const pages=Math.ceil(total/per);
+  if(pages<=1){ pager.style.display='none'; return; }
+  pager.style.display='flex';
+  pager.innerHTML=`
+    ${latestPage>0?`<span class="pager-btn" onclick="latestPage--;renderLatestPage()">← prev</span>`:'<span></span>'}
+    <span class="pager-info">${latestPage+1} / ${pages}</span>
+    ${latestPage+1<pages?`<span class="pager-btn" onclick="latestPage++;renderLatestPage()">next →</span>`:'<span></span>'}
+  `;
+}
+
+function maybeRenderLatest(){
+  if(filesLoaded&&blogLoaded){ renderLatest(); handlePath(); }
+}
+
+async function getWriteupCommitDate(path){
+  const key=`wdate_${path}`;
+  const cached=cacheGet(key);
+  if(cached) return cached;
+  try{
+    const res=await fetch(`https://api.github.com/repos/${USER}/${REPO}/commits?path=${encodeURIComponent(path)}&per_page=1`);
+    const data=await res.json();
+    if(Array.isArray(data)&&data.length){
+      const date=data[0]?.commit?.author?.date;
+      if(date){const d=date.slice(0,10);cacheSet(key,d);return d;}
+    }
+  }catch(_){}
+  return '';
+}
+
+function renderSidebar(containerId, excludePath){
+  const el=document.getElementById(containerId);
+  if(!el) return;
+  const items=[];
+  blogPosts.forEach((post,i)=>{
+    if(post.path===excludePath) return;
+    items.push({label:'blog',title:post.title,date:post.date,thumb:getBlogThumbUrl(post.path),onclick:`openBlogPost(${i})`});
+  });
+  files.forEach((f,i)=>{
+    if(f.path===excludePath) return;
+    const lbl=getCategory(f.path);
+    items.push({label:lbl.text,title:getFolderName(f.path).replace(/_/g,' '),date:'',thumb:getThumbUrl(f.path),onclick:`openFile(${i})`});
+  });
+  items.sort((a,b)=>{
+    if(a.date&&b.date) return b.date.localeCompare(a.date);
+    if(a.date) return -1;
+    if(b.date) return 1;
+    return 0;
+  });
+  const recent=items.slice(0,5);
+  el.innerHTML=`
+    <div class="sidebar-block">
+      <div class="sidebar-heading">explore</div>
+      <div class="sidebar-tags">
+        <span class="sidebar-tag" onclick="setFilter('pwn')">pwn</span>
+        <span class="sidebar-tag" onclick="setFilter('osint')">osint</span>
+        <span class="sidebar-tag" onclick="setFilter('malware-analysis')">malware-analysis</span>
+        <span class="sidebar-tag" onclick="show('blog')">blog</span>
+      </div>
+    </div>
+    ${recent.length?`<div class="sidebar-block">
+      <div class="sidebar-heading">recent posts</div>
+      ${recent.map(item=>`<div class="sidebar-post" onclick="${item.onclick}">
+        <img class="sidebar-post-thumb" src="${item.thumb}" onerror="this.style.display='none';">
+        <div class="sidebar-post-info">
+          <div class="sidebar-post-label">${item.label}</div>
+          <div class="sidebar-post-title">${item.title}</div>
+          ${item.date?`<div class="sidebar-post-date">${item.date}</div>`:''}
+        </div>
+      </div>`).join('')}
+    </div>`:''}
+  `;
+}
+
+function render(){
+  let filtered=files;
+  if(currentFilter!=='all') filtered=files.filter(f=>getPathCategory(f.path)===currentFilter);
+  if(!filtered.length){
+    document.getElementById('writeup-list').innerHTML='<span style="color:var(--muted);font-size:13px;">nothing here yet.</span>';
+    return;
+  }
+  document.getElementById('writeup-list').innerHTML=`<div class="writeup-grid">${
+    filtered.map(f=>{
+      const name=getFolderName(f.path);
+      const thumb=getThumbUrl(f.path);
+      const lbl=getCategory(f.path);
+      return `<div class="writeup-card" onclick="openFile(${files.indexOf(f)})">
+        <img class="writeup-thumb" src="${thumb}" onerror="this.style.display='none';">
+        <div class="writeup-body">
+          <div class="writeup-eyebrow">${lbl.text}${writeupDates[f.path]?' · '+writeupDates[f.path]:''}</div>
+          <div class="writeup-title">${name.replace(/_/g,' ')}</div>
+        </div>
+      </div>`;
+    }).join('')
+  }</div>`;
+}
+
+function formatBlogTitle(path){
+  return path.split('/').pop().replace(/\.md$/,'').replace(/[-_]/g,' ').replace(/\b\w/g, c=>c.toUpperCase());
+}
+
+async function getBlogCommitDate(path){
+  const key=`bdate_${path}`;
+  const cached=cacheGet(key);
+  if(cached) return cached;
+  try{
+    const res = await fetch(`https://api.github.com/repos/${BLOG_USER}/${BLOG_REPO}/commits?path=${encodeURIComponent(path)}&per_page=1`);
+    const data = await res.json();
+    if(Array.isArray(data) && data.length){
+      const date = data[0]?.commit?.author?.date;
+      if(date){const d=date.slice(0,10);cacheSet(key,d);return d;}
+    }
+  }catch(_){ }
+  return '';
+}
+
+function parseBlogMeta(path, md){
+  const lines = md.split(/\r?\n/);
+  let title = '';
+  let date = '';
+  let excerpt = '';
+  let inFrontmatter = false;
+  let frontmatterEnded = false;
+  let idx = 0;
+  if(lines[0] === '---'){
+    inFrontmatter = true;
+    idx = 1;
+    while(idx < lines.length){
+      const line=lines[idx].trim();
+      if(line === '---'){
+        frontmatterEnded = true;
+        idx++;
+        break;
+      }
+      const m=line.match(/^(\w+):\s*(.*)$/);
+      if(m){
+        const key=m[1].toLowerCase();
+        let value=m[2].trim();
+        value = value.replace(/^['"]|['"]$/g, '');
+        if(key==='title' && value) title = value;
+        if(key==='date' && value) date = value;
+        if(key==='excerpt' && value) excerpt = value;
+      }
+      idx++;
+    }
+  }
+  if(!title){
+    for(let i=idx;i<lines.length;i++){
+      const m=lines[i].match(/^#\s+(.*)$/);
+      if(m){ title=m[1].trim(); idx=i+1; break; }
+    }
+  }
+  if(!date){
+    const filename=path.split('/').pop();
+    const m=filename.match(/^(\d{4}-\d{2}-\d{2})[-_].*\.md$/);
+    if(m) date=m[1];
+  }
+  for(let i=idx;i<lines.length && !excerpt;i++){
+    const line = lines[i].trim();
+    if(!line || line.startsWith('#') || line.startsWith('```') || line.startsWith('>')) continue;
+    excerpt = line.replace(/\[(.*?)\]\([^)]+\)/g, '$1');
+  }
+  if(!title) title = formatBlogTitle(path);
+  if(!excerpt) excerpt = 'read the full post on GitHub';
+  return {path, title, date, excerpt};
+}
+
+
+function renderBlogList(){
+  const container = document.getElementById('blog-list');
+  if(!blogPosts.length){
+    container.innerHTML = '<div style="color:var(--muted);font-size:13px;">no blog posts found.</div>';
+    return;
+  }
+  container.innerHTML = `<div class="card-grid">${blogPosts.map((post, idx)=>{
+    const thumb = getBlogThumbUrl(post.path);
+    return `<div class="card" onclick="openBlogPost(${idx})">
+      <img class="card-thumb" src="${thumb}" onerror="this.style.display='none';">
+      <div class="card-body">
+        <div class="card-eyebrow">blog${post.date?' · '+post.date:''}</div>
+        <div class="card-title">${post.title}</div>
+        ${post.excerpt?`<div class="card-excerpt">${post.excerpt}</div>`:''}
+      </div>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+async function loadBlog(){
+  try{
+    let cached=cacheGet('blog_posts');
+    if(cached){
+      blogPosts=cached;
+      blogLoaded=true;
+      maybeRenderLatest();
+      renderBlogList();
+      return;
+    }
+    const res = await fetch(`https://api.github.com/repos/${BLOG_USER}/${BLOG_REPO}/git/trees/main?recursive=1`);
+    const data = await res.json();
+    const paths = (data.tree||[]).filter(f=>f.path.endsWith('.md')).map(f=>f.path);
+    blogPosts = await Promise.all(paths.map(async path=>{
+      try{
+        const mdRes = await fetch(`https://raw.githubusercontent.com/${BLOG_USER}/${BLOG_REPO}/main/${path}`);
+        const md = await mdRes.text();
+        const post = parseBlogMeta(path, md);
+        if(!post.date){
+          post.date = await getBlogCommitDate(path);
+        }
+        return post;
+      }catch(_){
+        const post = parseBlogMeta(path, '');
+        post.date = await getBlogCommitDate(path);
+        return post;
+      }
+    }));
+    blogPosts = blogPosts.filter(Boolean).sort((a,b)=>{
+      if(a.date && b.date) return b.date.localeCompare(a.date);
+      return a.title.localeCompare(b.title);
+    });
+    cacheSet('blog_posts',blogPosts);
+    blogLoaded=true;
+    maybeRenderLatest();
+    renderBlogList();
+  }catch(e){
+    document.getElementById('home-latest-grid').innerHTML = '<div style="color:#444;font-size:12px;">could not load.</div>';
+    document.getElementById('blog-list').innerHTML = '<div style="color:var(--muted);font-size:13px;">could not load blog posts.</div>';
+  }
+}
+
+async function openBlogPost(i){
+  const post = blogPosts[i];
+  if(!post) return;
+  setPath('/b/'+encodeURIComponent(post.path));
+  document.title = post.title+' — mlowlevl';
+  const rawBase = `https://raw.githubusercontent.com/${BLOG_USER}/${BLOG_REPO}/main/${post.path.replace(/[^/]+\.md$/,'')}`;
+  try{
+    const res = await fetch(`https://raw.githubusercontent.com/${BLOG_USER}/${BLOG_REPO}/main/${post.path}`);
+    let md = await res.text();
+    md = md.replace(/!\[([^\]]*)\]\((?!https?:\/\/)([^)]+)\)/g,(_,alt,src)=>{
+      return `![${alt}](${rawBase}${src})`;
+    });
+    document.getElementById('blog-title').textContent = post.title;
+    document.getElementById('blog-meta').innerHTML = `<span class="md-reader-byline">mlowlevl${post.date?' · '+post.date:''}</span>`;
+    if(typeof marked !== 'undefined'){
+      marked.setOptions({breaks:true});
+      document.getElementById('blog-content').innerHTML = marked.parse(md);
+    } else {
+      document.getElementById('blog-content').textContent = md;
+    }
+  }catch(e){
+    document.getElementById('blog-title').textContent = post.title;
+    document.getElementById('blog-meta').innerHTML = `<span class="md-reader-byline">mlowlevl${post.date?' · '+post.date:''}</span>`;
+    document.getElementById('blog-content').textContent = 'could not load this blog post.';
+  }
+  document.getElementById('blog-list').style.display = 'none';
+  document.getElementById('blog-detail-view').style.display = 'block';
+  blogDetailOpen = true;
+  renderSidebar('global-sidebar', post.path);
+  document.getElementById('global-sidebar').style.display='block';
+  loadGiscus('giscus-blog', post.path);
+  show('blog', false);
+}
+
+function closeBlogDetail(){
+  document.getElementById('blog-detail-view').style.display = 'none';
+  document.getElementById('blog-list').style.display = 'block';
+  document.getElementById('global-sidebar').style.display = 'none';
+  blogDetailOpen = false;
+  if(!_fromPopstate) history.pushState(null,'','/blog');
+  document.title = BASE_TITLE;
+}
+
+async function openFile(i){
+  const f=files[i];
+  setPath('/w/'+encodeURIComponent(getFolderName(f.path)));
+  document.title = getFolderName(f.path).replace(/_/g,' ')+' — mlowlevl';
+  // build raw URL — images in same folder should resolve relative to this
+  const rawBase=`https://raw.githubusercontent.com/${USER}/${REPO}/main/${f.path.replace(/[^/]+\.md$/,'')}`;
+  const res=await fetch(`https://raw.githubusercontent.com/${USER}/${REPO}/main/${f.path}`);
+  let md=await res.text();
+
+  // fix relative image paths to absolute raw github URLs
+  md=md.replace(/!\[([^\]]*)\]\((?!https?:\/\/)([^)]+)\)/g,(_,alt,src)=>{
+    return `![${alt}](${rawBase}${src})`;
+  });
+
+  const lbl=getCategory(f.path);
+  const name=getFolderName(f.path);
+
+  document.getElementById('wr-title').textContent=name.replace(/_/g,' ');
+  const catEl=document.getElementById('wr-cat');
+  catEl.textContent=lbl.text;
+  catEl.className='md-reader-cat '+lbl.cls;
+  document.getElementById('wr-date').textContent='';
+  getWriteupCommitDate(f.path).then(date=>{
+    if(date) document.getElementById('wr-date').textContent=' · '+date;
+  });
+
+  document.getElementById('list-view').style.display='none';
+  document.getElementById('detail-view').style.display='block';
+  show('writeups', false);
+  document.getElementById('list-view').style.display='none';
+  document.getElementById('detail-view').style.display='block';
+
+  renderSidebar('global-sidebar', f.path);
+  document.getElementById('global-sidebar').style.display='block';
+  loadGiscus('giscus-writeup', f.path);
+
+  if(typeof marked!=='undefined'){
+    marked.setOptions({breaks:true});
+    document.getElementById('wr-content').innerHTML=marked.parse(md);
+  } else {
+    document.getElementById('wr-content').textContent=md;
+  }
+}
+
+function back(){
+  document.getElementById('list-view').style.display='block';
+  document.getElementById('detail-view').style.display='none';
+  document.getElementById('global-sidebar').style.display='none';
+  if(!_fromPopstate) history.pushState(null,'','/writeups');
+  document.title = BASE_TITLE;
+}
+
+load();
+</script>

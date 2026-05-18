@@ -1,0 +1,11 @@
+{{ define "main" }}
+<h2 class="section-title">tools &amp; projects</h2>
+<div class="tool-list">
+  {{ range site.Data.tools }}
+  <a class="tool-entry" href="{{ .url }}" target="_blank" rel="noopener">
+    <span class="tool-entry-name">{{ .name }}</span>
+    <span class="tool-entry-desc">{{ .desc }}</span>
+  </a>
+  {{ end }}
+</div>
+{{ end }}

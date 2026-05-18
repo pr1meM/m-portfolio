@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>{{- partial "head.html" . -}}</head>
+<body>
+{{- partial "nav.html" . -}}
+<div class="page-layout">
+  <div class="paper">
+    <div class="content">
+      {{- block "main" . }}{{- end }}
+    </div>
+  </div>
+  {{- block "sidebar" . }}{{- end }}
+</div>
+{{- partial "footer.html" . -}}
+<script src="{{ "js/main.js" | relURL }}"></script>
+</body>
+</html>
